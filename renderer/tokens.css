@@ -1,0 +1,98 @@
+/* FileBridge 冰蓝 · 浅色为默认主题 */
+:root {
+  color-scheme: light;
+
+  --fb-bg: #F1F5FA;
+  --fb-surface: #FFFFFF;
+  --fb-surface-hover: #EAF1FA;
+  --fb-surface-active: #DCE9F8;
+  --fb-text: #172638;
+  --fb-text-secondary: #52667C;
+  --fb-border: #D5DFEB;
+
+  --fb-brand: #2565AF;
+  --fb-brand-soft: #E5EFFB;
+  --fb-on-brand: #FFFFFF;
+
+  --fb-success: #21734F;
+  --fb-warning: #865B0D;
+  --fb-error: #B53C47;
+  --fb-error-soft: #FFF0F2;
+
+  --fb-disabled-bg: #E4EAF1;
+  --fb-disabled-text: #718094;
+  --fb-focus: #2565AF;
+  --fb-floating: rgba(255, 255, 255, 0.97);
+  --fb-overlay: rgba(10, 20, 34, 0.48);
+
+  --fb-shadow-small: 0 4px 16px rgba(16, 34, 56, 0.10);
+  --fb-shadow-floating: 0 16px 48px rgba(16, 34, 56, 0.18);
+
+  --fb-radius-control: 10px;
+  --fb-radius-panel: 12px;
+  --fb-radius-dialog: 16px;
+
+  --fb-font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --fb-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --fb-text-xs: 12px;
+  --fb-text-sm: 14px;
+  --fb-text-md: 16px;
+  --fb-text-lg: 20px;
+  --fb-text-xl: 24px;
+
+  --fb-leading-tight: 1.25;
+  --fb-leading-normal: 1.5;
+  --fb-leading-long: 1.75;
+
+  --fb-space-1: 4px;
+  --fb-space-2: 8px;
+  --fb-space-3: 12px;
+  --fb-space-4: 16px;
+  --fb-space-5: 20px;
+  --fb-space-6: 24px;
+  --fb-space-8: 32px;
+  --fb-space-10: 40px;
+  --fb-space-12: 48px;
+
+  --fb-radius-sm: 6px;
+  --fb-control-height: 40px;
+  --fb-row-height: 56px;
+  --fb-sidebar-width: 208px;
+  --fb-inspector-width: 256px;
+
+  --fb-duration-fast: 120ms;
+  --fb-duration-normal: 160ms;
+  --fb-duration-enter: 200ms;
+  --fb-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --fb-bg: #111923;
+  --fb-surface: #182330;
+  --fb-surface-hover: #203247;
+  --fb-surface-active: #263D56;
+  --fb-text: #E5EDF7;
+  --fb-text-secondary: #A0B2C8;
+  --fb-border: #30445C;
+
+  --fb-brand: #5E9FE8;
+  --fb-brand-soft: #263D56;
+  --fb-on-brand: #0C1929;
+
+  --fb-success: #75C9A0;
+  --fb-warning: #E8BC70;
+  --fb-error: #FF929E;
+  --fb-error-soft: #422630;
+
+  --fb-disabled-bg: #243140;
+  --fb-disabled-text: #8292A7;
+  --fb-focus: #88BBF4;
+  --fb-floating: rgba(24, 35, 48, 0.97);
+  --fb-overlay: rgba(4, 10, 18, 0.68);
+
+  --fb-shadow-small: 0 4px 16px rgba(0, 0, 0, 0.24);
+  --fb-shadow-floating: 0 16px 48px rgba(0, 0, 0, 0.40);
+}

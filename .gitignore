@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+dist-portable/
+out/
+release/
+*.dmg
+*.pkg
+*.exe
+*.zip
+*.blockmap
+*.AppImage
+
+# runtime / user data
+config.json
+tunnel.json
+float-window.json
+clipboard.json
+tombstones.json
+*.log
+*.part
+*.fb-upload*
+*.fb-sync*
+.DS_Store
+Thumbs.db
+
+# local tooling
+.vscode/
+.idea/
+*.swp
+*.pem
+*.p12
+*.cer
+.env
+.env.*
+
+# design prototype (not part of the product)
+design-reference/

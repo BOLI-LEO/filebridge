@@ -1,0 +1,102 @@
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #172638;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+}
+body {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+}
+.bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background:
+    radial-gradient(560px 340px at 22% 8%, #E8F1FD 0%, rgba(232, 241, 253, 0) 62%),
+    radial-gradient(520px 360px at 82% 92%, #EEF4FD 0%, rgba(238, 244, 253, 0) 60%),
+    linear-gradient(160deg, #F8FBFF 0%, #F0F5FC 100%);
+  border: 1px solid #DCE6F2;
+  box-shadow: 0 24px 70px rgba(16, 34, 56, 0.18);
+}
+.splash-card {
+  position: relative;
+  text-align: center;
+  animation: rise 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.logo-wrap {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 16px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(37, 101, 175, 0.25);
+  animation: pop 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.logo { width: 100%; height: 100%; display: block; }
+.name {
+  font-size: 25px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.tagline {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #52667C;
+  letter-spacing: 0.02em;
+}
+.bar {
+  width: 148px;
+  height: 3px;
+  margin: 22px auto 0;
+  border-radius: 3px;
+  background: #DCE6F2;
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  width: 42%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #5EA0E8, #2565AF);
+  animation: load 1.15s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+.hint {
+  margin-top: 10px;
+  font-size: 10.5px;
+  color: #7A8CA1;
+}
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  text-align: center;
+  font-size: 10px;
+  color: #93A3B6;
+  letter-spacing: 0.02em;
+}
+@keyframes load {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(340%); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "filebridge",
+  "productName": "FileBridge",
+  "version": "1.0.0",
+  "description": "局域网文件互通 — Mac 与 Windows 之间拖拽互传、实时同步、文本剪贴板共享",
+  "main": "main.js",
+  "author": "Leo",
+  "license": "MIT",
+  "scripts": {
+    "start": "node scripts/start.js",
+    "server": "node server/standalone.js",
+    "pack:mac": "node scripts/pack.js mac && node scripts/make-dmg.js",
+    "pack:win": "electron-builder --win nsis --x64",
+    "pack": "node scripts/pack.js all",
+    "test": "node tests/smoke.js",
+    "pack:dmg": "node scripts/make-dmg.js",
+    "pack:win:zip": "node scripts/zip-win.js"
+  },
+  "dependencies": {
+    "jszip": "^3.10.2",
+    "mammoth": "^1.13.0",
+    "qrcode-generator": "^1.4.4",
+    "ws": "^8.18.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "appdmg": "^0.6.6",
+    "electron": "45.2.1",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.leoleo.filebridge",
+    "productName": "FileBridge",
+    "copyright": "Copyright © 2026 Leo",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json",
+      "server/**/*",
+      "renderer/**/*",
+      "assets/**/*"
+    ],
+    "asar": true,
+    "npmRebuild": false,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/app-icon.ico",
+      "artifactName": "FileBridge-Setup-${version}.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FileBridge",
+      "installerIcon": "assets/app-icon.ico",
+      "uninstallerIcon": "assets/app-icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.utilities",
+      "icon": "assets/app-icon.png"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

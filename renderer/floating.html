@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>FileBridge 投递</title>
+<link rel="stylesheet" href="/tokens.css?v=20261107b">
+<link rel="stylesheet" href="/floating.css?v=20261107b">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bridge" viewBox="0 0 24 24"><path d="M4 9h12l-3-3M20 15H8l3 3"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<div class="root collapsed" id="root">
+  <div class="handle" id="handle"></div>
+  <button class="collapsed-btn" id="collapsed" aria-label="打开投递面板">
+    <img class="cat-icon" src="/assets/app-icon.png" alt="">
+    <span class="dot" id="status-dot"></span>
+  </button>
+
+  <div class="panel" id="panel" hidden>
+    <div class="grip" id="grip" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="head">
+      <img class="cat-mini" src="/assets/app-icon.png" alt="">
+      <b>投递</b>
+      <button class="collapse" id="collapse">收起</button>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <svg class="icon" style="width:20px;height:20px;color:var(--fb-brand)"><use href="#i-upload"/></svg>
+      <div class="t">拖文件到这里</div>
+      <div class="s">复制到共享目录并同步</div>
+    </div>
+
+    <div class="line">
+      <span class="k">保存到</span>
+      <span class="v"><span class="path" id="target">临时收件箱</span><button class="chg" id="pick">更改</button></span>
+    </div>
+    <div class="line">
+      <span class="k">同步到</span>
+      <span class="v" id="peer"><span class="dot warn"></span>等待设备</span>
+    </div>
+
+    <div class="foot">
+      <button id="settings">设置</button>
+      <button id="open-main">打开主窗口</button>
+    </div>
+
+    <div class="overlay" id="confirm" hidden>
+      <div class="ov-head">
+        <b id="confirm-title">待投递</b>
+        <button class="icon-btn" id="confirm-close" aria-label="取消">✕</button>
+      </div>
+      <div class="ov-list" id="confirm-list"></div>
+      <div class="ov-dest">保存到 <b id="confirm-target">临时收件箱</b></div>
+      <div class="ov-actions">
+        <button class="btn" id="confirm-cancel">取消</button>
+        <button class="btn primary" id="confirm-ok">投递</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="picker" hidden>
+      <div class="ov-head">
+        <b>保存到</b>
+        <button class="icon-btn" id="picker-close" aria-label="关闭">✕</button>
+      </div>
+      <div class="pk-list" id="picker-list"></div>
+    </div>
+
+    <div class="status" id="status" hidden>
+      <div class="st-text" id="status-text">正在投递…</div>
+      <div class="st-bar"><i id="status-bar"></i></div>
+    </div>
+  </div>
+</div>
+
+<script src="/floating.js?v=20261107b"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+<title>FileBridge</title>
+<link rel="icon" href="/assets/app-icon.png">
+<link rel="stylesheet" href="/tokens.css?v=20261107b">
+<link rel="stylesheet" href="/style.css?v=20261107b">
+</head>
+<body>
+
+<div id="splash" class="splash">
+  <div class="splash-card">
+    <div class="splash-logo"><img src="/assets/app-icon.png" alt=""></div>
+    <div class="splash-name">FileBridge</div>
+    <div class="splash-sub">局域网文件互通</div>
+    <div class="splash-bar"><i></i></div>
+    <div class="splash-hint">正在准备共享空间…</div>
+  </div>
+  <div class="splash-foot">Mac ↔ Windows · iPhone 扫码直连</div>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bridge" viewBox="0 0 24 24"><path d="M4 9h12l-3-3M20 15H8l3 3"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 5h16v10h-4l-2 3h-4l-2-3H4z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h5"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></symbol>
+  <symbol id="i-zip" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h5M10 8v2M10 12v2M10 16v2"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></symbol>
+  <symbol id="i-folder-plus" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM12 11v5M9.5 13.5h5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10v5M9.5 12.5h5"/></symbol>
+  <symbol id="i-rename" viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4L4 16zM13 5l4 4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3.8a7 7 0 0 0-2-1.2L14.2 3h-4.4l-.4 2.5a7 7 0 0 0-2 1.2l-2.3-.8-2 3.4 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.4 2.3-.8a7 7 0 0 0 2 1.2l.4 2.5h4.4l.4-2.5a7 7 0 0 0 2-1.2l2.3.8 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 7a8 8 0 0 0-14 .5M4 17a8 8 0 0 0 14-.5M20 3v4h-4M4 21v-4h4"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-8A6 6 0 0 1 18 9.5 4.5 4.5 0 0 1 17.5 18z"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <aside class="side">
+    <div class="brand">
+      <span class="mark"><img src="/assets/app-icon.png" alt=""></span>
+      <span><b>FileBridge</b><span class="sub">局域网文件互通</span></span>
+    </div>
+
+    <button class="btn primary upload" id="btn-upload"><svg class="icon"><use href="#i-upload"/></svg>上传文件</button>
+    <input type="file" id="file-input" multiple hidden>
+
+    <nav class="nav">
+      <button class="nav-item on" data-nav="all"><svg class="icon"><use href="#i-folder"/></svg>全部文件</button>
+      <button class="nav-item" data-nav="inbox"><svg class="icon"><use href="#i-inbox"/></svg>临时收件箱</button>
+      <button class="nav-item" data-nav="clipboard"><svg class="icon"><use href="#i-clip"/></svg>剪贴板<span class="n" id="clip-count">0</span></button>
+      <button class="nav-item" data-nav="devices"><svg class="icon"><use href="#i-device"/></svg>设备<span class="n" id="peer-count">0/0</span></button>
+    </nav>
+
+    <div id="project-list">
+      <div class="side-label">项目</div>
+      <div id="projects"></div>
+    </div>
+
+    <div class="side-foot">
+      <div class="device-line" id="local-device"><span class="dot"></span>本机</div>
+      <div class="path-line" id="root-path"></div>
+      <button class="nav-item" id="btn-phone"><svg class="icon"><use href="#i-phone"/></svg>手机访问</button>
+      <button class="nav-item" id="btn-settings"><svg class="icon"><use href="#i-gear"/></svg>设置</button>
+      <button class="nav-item" id="btn-float"><svg class="icon"><use href="#i-bridge"/></svg>悬浮窗 · 已开启</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="icon-btn" id="btn-back" aria-label="返回上一级"><svg class="icon"><use href="#i-back"/></svg></button>
+      <div class="crumbs" id="crumbs"></div>
+      <div class="spacer"></div>
+      <div class="sync-chip" id="sync-chip"></div>
+      <label class="search"><svg class="icon"><use href="#i-search"/></svg><input id="search" placeholder="搜索" aria-label="搜索当前目录"></label>
+      <button class="icon-btn" id="btn-more-top" aria-label="更多"><svg class="icon"><use href="#i-more"/></svg></button>
+    </div>
+
+    <div class="toolbar" id="toolbar">
+      <span class="sel-info" id="sel-info" hidden>已选 <b>0 项</b></span>
+      <button class="btn" id="btn-download" hidden><svg class="icon"><use href="#i-download"/></svg>下载</button>
+      <button class="btn" id="btn-move" hidden><svg class="icon"><use href="#i-move"/></svg>移动</button>
+      <button class="btn" id="btn-rename" hidden><svg class="icon"><use href="#i-rename"/></svg>重命名</button>
+      <button class="btn" id="btn-delete" hidden><svg class="icon"><use href="#i-trash"/></svg>删除</button>
+      <button class="btn" id="btn-cancel-sel" hidden style="border-color:transparent;color:var(--fb-text-secondary)">取消选择</button>
+      <div id="toolbar-default" class="row" style="gap:6px">
+        <button class="btn" id="btn-mkdir"><svg class="icon"><use href="#i-folder-plus"/></svg>新建文件夹</button>
+        <button class="btn" id="btn-refresh"><svg class="icon"><use href="#i-sync"/></svg>刷新</button>
+      </div>
+      <div class="spacer"></div>
+    </div>
+
+    <div class="list" id="list">
+      <table class="table" id="file-table">
+        <thead>
+          <tr>
+            <th class="c-check"><input class="cb" type="checkbox" id="check-all" aria-label="全选"></th>
+            <th class="c-name">名称</th>
+            <th class="c-size num">大小</th>
+            <th class="c-time num">修改时间</th>
+            <th class="c-state">状态</th>
+            <th class="c-act"></th>
+          </tr>
+        </thead>
+        <tbody id="file-list"></tbody>
+      </table>
+      <div id="empty" class="empty-state" hidden>
+        <h2>这里还没有文件</h2>
+        <p class="muted">拖入文件，或点击左上角上传。</p>
+        <button class="btn primary" id="btn-upload-empty">上传文件</button>
+      </div>
+      <div id="loading" class="empty-state" hidden><p class="muted">正在读取…</p></div>
+    </div>
+
+    <div class="transferbar" id="transferbar" hidden>
+      <svg class="icon" style="color:var(--fb-brand)"><use href="#i-sync"/></svg>
+      <span id="transfer-text">传输</span>
+      <div class="bar" id="transfer-progress"><i></i></div>
+      <span class="mono" id="transfer-percent"></span>
+      <div class="spacer"></div>
+      <button id="btn-transfer-toggle">展开</button>
+    </div>
+  </main>
+
+  <aside class="detail" id="detail" hidden>
+    <div class="detail-head">
+      <div>
+        <div class="detail-title" id="d-title"></div>
+        <div class="detail-sub" id="d-path"></div>
+      </div>
+      <button class="icon-btn close" id="btn-detail-close" aria-label="关闭详情"><svg class="icon"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="preview" id="d-preview"></div>
+    <div class="meta">
+      <div class="m"><span class="k">大小</span><span class="v" id="d-size"></span></div>
+      <div class="m"><span class="k">修改时间</span><span class="v" id="d-time"></span></div>
+      <div class="m"><span class="k">位置</span><span class="v" id="d-folder"></span></div>
+      <div class="m"><span class="k">来源</span><span class="v" id="d-source"></span></div>
+    </div>
+    <div class="syncbox" id="d-sync"></div>
+    <div class="actions">
+      <button class="btn" id="d-download"><svg class="icon"><use href="#i-download"/></svg>下载</button>
+      <button class="btn" id="d-preview-btn"><svg class="icon"><use href="#i-file"/></svg>预览</button>
+      <button class="btn" id="d-reveal"><svg class="icon"><use href="#i-folder"/></svg>在 Finder 中显示</button>
+      <button class="btn danger" id="d-delete"><svg class="icon"><use href="#i-trash"/></svg>删除</button>
+    </div>
+  </aside>
+</div>
+
+<button class="fab" id="fab-upload"><svg class="icon"><use href="#i-upload"/></svg>上传</button>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="queue" class="queue" hidden></div>
+<div id="drop" class="drop-overlay" hidden><div>松开即可上传到当前文件夹</div></div>
+
+<dialog id="dialog" class="dialog">
+  <div class="dialog-body" id="dialog-body"></div>
+</dialog>
+
+<script src="/app.js?v=20261107b"></script>
+</body>
+</html>
