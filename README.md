@@ -125,8 +125,10 @@ flowchart TD
 | [网络连通性诊断](docs/network-validation.md) | ICMP、TCP、HTTP 的排障方法 |
 | [校园网络实验图集](docs/campus-network/README.md) | 五张 PNG 拓扑图、测量事实与推断 |
 | [故障排查](docs/troubleshooting.md) | 连接、安装、同步问题 |
+| [项目记忆](docs/PROJECT_MEMORY.md) | 历史决策、坑位与后续方向 |
+| [iPhone 原生 App 规划](docs/iphone-native-plan.md) | SwiftUI 客户端设计 |
 | [变更日志](CHANGELOG.md) | 版本记录 |
 
 ## 许可
 
-[MIT License](LICENSE)。
+[MIT License](LICENSE).
