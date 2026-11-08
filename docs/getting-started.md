@@ -3,7 +3,7 @@
 ## 1. 环境
 
 - macOS 13+ / Windows 10 11（x64）
-- 从源码运行需要 Node.js 20+ 与 npm
+- 从源码运行或构建需要 Node.js 22.12.0 或更高版本与 npm（建议 Node.js 22 LTS）
 - 两台设备需要在同一局域网，或同时登录同一个 Tailscale 网络
 
 ## 2. 安装
