@@ -13,7 +13,7 @@ $CODE   = "<ACCESS_CODE>"
 
 ping $TARGET
 Test-NetConnection $TARGET -Port $PORT
-curl.exe "http://$TARGET:$PORT/api/health"
+curl.exe "http://${TARGET}:${PORT}/api/health"
 ```
 
 macOS / Linux：
@@ -30,18 +30,18 @@ curl "http://$TARGET:47890/api/health"
 | ping | TCP 47890 | /api/health | 说明 |
 |---|---|---|---|
 | 通 | 通 | ok | 完全可用 |
-| 不通 | 通 | ok | **ICMP 被防火墙拦截，但 FileBridge 可用** |
+| 不通 | 通 | ok | **ICMP Echo 未获响应，但 FileBridge 服务可用** |
 | 通 | 不通 | — | 路由可达，但服务未启动或端口被防火墙拦截 |
-| 不通 | 不通 | — | 跨 VLAN/ACL 隔离，或服务未启动 |
+| 不通 | 不通 | — | 可能是网络隔离、主机策略、服务未启动或端口配置错误；需要进一步排查 |
 
-Windows 防火墙默认经常拒绝 ICMP Echo，因此 `ping` 失败**不能**说明 Web 服务不可用。
+Windows 防火墙或中间网络策略可能拒绝 ICMP Echo，因此 `ping` 失败**不能**说明 Web 服务不可用。
 
 ## 为什么 Ping 不通但 HTTP 能通
 
 ICMP 与 TCP 是不同协议，防火墙可以分别放行：
 
 - 放行 TCP 47890（FileBridge Web/同步）
-- 默认阻止 ICMP Echo
+- 可能阻止 ICMP Echo（也可能由中间网络策略过滤）
 
 只要 TCP 三次握手成功、HTTP 返回 `{"ok":true,...}`，应用层就是可用的。
 
@@ -49,7 +49,7 @@ ICMP 与 TCP 是不同协议，防火墙可以分别放行：
 
 - 两台设备在不同 `/24` 甚至不同 VLAN，仍可能通过三层网关访问 TCP 47890
 - UDP 广播（47891）通常不跨子网，因此**自动发现失败但手动添加可用**
-- 需要稳定跨网络时用 Tailscale 的 `100.x` 地址，不依赖校园网 ACL
+- 可在获准使用时考虑 Tailscale 等覆盖网络；它仍依赖底层网络允许必要的连接，不能保证绕过校园网策略
 
 ## 验证 FileBridge 而不是只验证端口
 
@@ -77,3 +77,7 @@ Windows 客户端：
 ```
 
 脚本会依次测试 ping、TCP 47890、`/api/health`，并在 ping 失败但 TCP 成功时明确提示“ICMP 被拦，不代表不可用”。
+
+## 校园网实测案例
+
+[五张网络系列图及证据边界](campus-network/README.md) 记录了学生网跨接入点、跨不同合法校园网账号的 FileBridge 成功测试，以及学生网与教学设备网之间的已测连接失败。有关 ACL 位置、UDP 跨区状态和设备角色均未最终确认。
