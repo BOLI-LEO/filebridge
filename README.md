@@ -1,147 +1,120 @@
+<div align="center">
+
+<img src="assets/app-icon.png" alt="FileBridge 图标" width="100" />
+
 # FileBridge
 
-Mac ↔ Windows 的局域网文件互通工具：共享文件夹自动双向同步、桌面悬浮窗拖拽投递、手机扫码访问、文本剪贴板共享。  
-不依赖云服务器；同一局域网直连，异地可配合 Tailscale 或 Cloudflare Tunnel。
+**Mac ↔ Windows 文件互传与双向同步**
 
-> 当前版本：**v1.0.0**（未签名构建，个人/小团队使用）
+无需云端中转 · 局域网设备发现 · 桌面拖拽投递 · iPhone 浏览器访问
 
-## 功能
+[查看安装说明](docs/getting-started.md) · [了解技术架构](docs/architecture.md) · [校园网实测图集](docs/campus-network/README.md) · [连通性诊断](docs/network-validation.md)
 
-- **双向同步**：两端共享目录的文件新增/修改会自动出现在另一台设备。
-- **删除同步（墓碑）**：在应用内删除会双向生效，不会被对端重新拉回。
-- **悬浮窗投递**：把文件拖到桌面悬浮窗，选择项目/文件夹后归档并同步。
-- **手机访问**：iPhone Safari 扫码即可浏览、下载、上传，无需安装 App。
-- **在线预览**：图片、文本/代码、视频、音频、PDF、Office/ZIP 基础预览。
-- **跨设备剪贴板**：文字实时同步，支持复制/删除。
-- **目录操作**：新建文件夹、重命名、移动、删除、修改共享目录。
-- **多种发现方式**：UDP 广播、HTTP 局域网扫描、手动添加、IP 变更自动通告。
-- **远程访问**：内置 Cloudflare Tunnel 管理，可绑定自己的域名。
+</div>
 
-## 架构
+---
+
+## 简介
+
+FileBridge 是面向 macOS、Windows 和手机浏览器的轻量级本地文件协作工具。两台电脑在**网络允许直接连接**的前提下，可自动发现对端并同步共享目录；遇到禁止广播、不同子网等情况时，也支持网络扫描或手动指定 IP。
+
+> 当前版本：**v1.0.0**。项目为个人开发与实验用途，安装包尚未签名。**局域网互通取决于网络策略**，不保证任意校园网或企业网络都能直接连接。
+
+## 核心功能
+
+| 功能 | 说明 |
+|:---|:---|
+| **双向文件同步** | 自动拉取对端文件清单，下载新增或变更内容 |
+| **删除墓碑机制** | 应用内删除产生墓碑并传播，避免旧副本被重新拉回 |
+| **拖拽投递** | 桌面悬浮窗快速接收文件 |
+| **手机浏览器访问** | iPhone Safari 扫码浏览、上传和下载，无需安装 App |
+| **实时剪贴板** | 文本内容跨设备同步 |
+| **文件预览** | 图片、文本、PDF、音视频及部分 Office/ZIP 预览 |
+| **多种发现方式** | UDP 广播、同网段 HTTP 扫描、手动添加、IP 变更通告 |
+| **远程网络扩展** | 可配合 Tailscale 或 Cloudflare Tunnel 使用 |
+
+## 30 秒了解工作方式
 
 ```mermaid
 flowchart LR
-  subgraph Mac
-    UI1[Electron UI] --> S1[内置 HTTP/WS 服务]
-    S1 --> D1[(共享目录)]
-    S1 --> SY1[同步引擎]
-  end
-  subgraph Windows
-    UI2[Electron UI] --> S2[内置 HTTP/WS 服务]
-    S2 --> D2[(共享目录)]
-    S2 --> SY2[同步引擎]
-  end
-  SY1 <-- 局域网 / Tailscale HTTP --> SY2
-  Phone[手机浏览器] -. 同一 Wi-Fi / Tunnel .-> S1
+    A["Mac / Windows A"] <-->|"TCP 47890 · HTTP / WebSocket"| B["Windows / Mac B"]
+    A <-->|"授权共享目录"| C["本地文件"]
+    B <-->|"授权共享目录"| D["对端文件"]
+    P["iPhone 浏览器"] -->|"同一可达网络 / 授权隧道"| A
 ```
 
-- 默认端口：HTTP/WS **47890**，UDP 发现 **47891**（端口被占用时自动 +1）。
-- 同步是"拉取镜像 + 墓碑删除"：每轮拉取对端清单，只下载缺失/变更文件；删除通过墓碑传播。
-- 冲突策略：同名不同内容保留双方，另一份命名为 `原名 (来自 设备名).扩展名`。
+- **TCP 47890**：HTTP API、WebSocket、文件传输与同步。
+- **UDP 47891**：同一可达广播环境中的设备发现。
+- 实际端口可能因占用而自动改变；以应用显示的端口为准。
+- 同步轮询与事件触发共同工作，属于**近实时同步**，不承诺零延迟。
 
-## 快速开始
+## 下载与运行
 
-### 从源码运行
+**查看 [Releases 发布页](https://github.com/BOLI-LEO/filebridge/releases)** 获取可用的构建包（以发布页实际提供内容为准）。
+
+| 平台 | 安装选项 |
+|---|---|
+| macOS | `.pkg` / Apple Silicon `.dmg` |
+| Windows | NSIS `.exe` / 免安装压缩包 |
+| 手机 | 无独立 App；通过浏览器连接电脑 |
+
+源码运行需要 Node.js 20+：
 
 ```bash
 npm install
-npm start          # Electron 桌面模式
-npm run server     # 只启动服务，浏览器访问
+npm start
+# 仅运行浏览器服务：
+npm run server
 ```
 
-### 安装包
+首次使用：两台电脑分别设置相同的访问口令、选择各自共享目录，然后等待设备发现；如无法自动发现，可在「同步设备」中扫描或手动添加对端 `IP:47890`。详细步骤见 [快速开始](docs/getting-started.md)。
 
-发布页提供以下产物：
+## 校园网实测 · 五张网络系列图
 
-| 平台 | 文件 | 说明 |
-|---|---|---|
-| macOS | `FileBridge-1.0.0.pkg` | 双击自动安装到 `/Applications` |
-| macOS | `FileBridge-mac-arm64.dmg` | 打开后拖入 Applications |
-| Windows | `FileBridge-Setup-1.0.0.exe` | NSIS 安装器，支持 `/S`、`/D=` |
-| Windows | `FileBridge-win-x64.zip` | 免安装，解压双击 `FileBridge.exe` |
+本项目通过自有及获授权的设备测试了学生网内部的跨 AP、跨楼栋、跨不同合法账号互访，以及学生网络和教学设备网络间指定端口的连接表现。下面是**根据实验重新绘制的 SVG 网络图解**；并非学校官方拓扑，也不是原始 PNG 图的逐像素复制。
 
-> **Windows 安装器固定使用 NSIS 3.04 stub**。NSIS 3.13 的 stub 在 Windows 11 25H2 上启动即 `0xC0000005` 崩溃，请勿升级。  
-> 安装器异常时直接使用免安装 zip，功能完全一致。
+[![校园网总体逻辑拓扑](docs/campus-network/assets/01-campus-overview.svg)](docs/campus-network/README.md)
 
-## 首次使用
+| 学生网互通 | 教学网跨区边界 |
+|:---:|:---:|
+| [![学生网接入与验证](docs/campus-network/assets/02-student-network.svg)](docs/campus-network/README.md#02--学生网接入与-filebridge-互通) | [![教学设备网络边界](docs/campus-network/assets/03-teaching-boundary.svg)](docs/campus-network/README.md#03--教学设备网与跨区边界) |
+| 仿真协议架构 | 测试结论 |
+| [![仿真协议架构](docs/campus-network/assets/04-simulation-architecture.svg)](docs/campus-network/README.md#04--网络工程仿真与协议分层) | [![测试结论与使用建议](docs/campus-network/assets/05-findings-and-guidance.svg)](docs/campus-network/README.md#05--实测结论与使用建议) |
 
-1. 打开 App，设置访问口令（两台设备必须一致）。
-2. 设置共享目录（默认 `~/FileBridge` / `%USERPROFILE%\FileBridge`，可在设置里更改）。
-3. 同一局域网内会自动发现并同步；无法自动发现时：
-   - 设置 → 同步设备 → **扫描局域网**
-   - 或手动添加 `对方 IP : 47890`
-4. 手机与电脑连同一 Wi-Fi，主窗口「手机访问」扫码。
-5. 异地使用：两端安装 [Tailscale](https://tailscale.com/download) 并登录同一账号，填 `100.x.x.x:47890`；或配置 Cloudflare Tunnel。
+**实验中可确认的情况：** 学生网内多地点、不同账号的测试终端可以通过 TCP/HTTP 互访并完成 FileBridge 双向同步；学生网与教学设备网之间的已测 TCP 50000 双向连接失败。核心/汇聚的实际设备、ACL 部署位置、VLAN 编号和跨区 UDP 策略**均未证实**。
 
-详细步骤见 [docs/getting-started.md](docs/getting-started.md)。
+[查看完整图集、地址表与证据边界 →](docs/campus-network/README.md)
 
-## 删除语义（重要）
+## 架构与实现
 
-- 只有在 **应用内删除**（右键删除 / 工具栏删除 / `POST /api/delete`）才会写墓碑并双向删除。
-- 在 Finder / 资源管理器 / PowerShell 直接删除**不会**写墓碑，文件可能被对端重新拉回。
-- 墓碑只删除 `mtime <= deletedAt` 的文件；删除后对端又修改/新建的同名文件会保留。
-- 删除是永久的，不进回收站。
+```mermaid
+flowchart TD
+    UI["Electron 窗口 / 悬浮窗"] --> API["内置 HTTP / WebSocket 服务"]
+    API --> FILE["共享文件目录"]
+    API --> SYNC["同步引擎"]
+    SYNC --> DISC["设备发现 · 广播 / HTTP 扫描 / 手动地址"]
+    SYNC --> TOMB["墓碑删除与冲突副本"]
+    API --> TUN["可选：Tailscale / Cloudflare Tunnel"]
+```
 
-## 配置与数据
+**删除语义必须注意：** 仅在 FileBridge 内删除才会生成墓碑并同步删除；直接在文件管理器中删除可能被对端重新同步回来。应用内删除目前是永久删除，不进入回收站。两端修改同名文件时保留冲突副本，避免简单覆盖。
 
-| 平台 | 数据目录 |
+**安全边界：** FileBridge 默认使用明文 HTTP；局域网不等于可信网络。使用访问口令，仅共享预期目录；跨公网请采用安全隧道并增加额外认证。不要将访问口令放在截图、文档或 Git 提交中。
+
+## 文档导航
+
+| 指南 | 说明 |
 |---|---|
-| macOS | `~/Library/Application Support/FileBridge/` |
-| Windows | `%APPDATA%\FileBridge\` |
+| [安装与首次运行](docs/getting-started.md) | Mac、Windows、手机端操作 |
+| [技术架构](docs/architecture.md) | 内置服务、同步流程和端口 |
+| [同步协议](docs/sync-protocol.md) | 设备发现、增量同步、冲突和墓碑 |
+| [HTTP API](docs/API.md) | 服务接口与身份认证 |
+| [Windows 部署](docs/windows-deployment.md) | 安装、权限和常见问题 |
+| [网络连通性诊断](docs/network-validation.md) | ICMP、TCP、HTTP 的排障方法 |
+| [校园网络实验图集](docs/campus-network/README.md) | 五张矢量拓扑图、测量事实与推断 |
+| [故障排查](docs/troubleshooting.md) | 连接、安装、同步问题 |
+| [变更日志](CHANGELOG.md) | 版本记录 |
 
-文件：
+## 许可
 
-- `config.json`：设备名、共享目录、访问口令、端口、`manualPeers` 等
-- `tunnel.json`：Cloudflare Tunnel 配置（token 仅存本机）
-- `float-window.json`：悬浮窗位置
-- `clipboard.json`：剪贴板历史
-- `tombstones.json`：删除墓碑（保留 30 天）
-
-> 升级/重装请保留 `deviceId`，否则对端会把它当成新设备。
-
-## 构建与发布
-
-```bash
-npm run pack:mac   # .app + zip + pkg + 样式化 dmg
-npm run pack:win   # Setup.exe + 免安装 zip
-npm run pack:dmg   # 只重新生成 DMG
-```
-
-Windows 安装器跨平台构建依赖：
-
-- electron-builder **26.18.0**
-- NSIS bundle **3.0.4.1**（makensis 3.04）
-- 不要使用 `nsis@2.0.4` / NSIS 3.13
-
-构建产物不提交到 git，发布时作为 Release 资产上传。
-
-## 文档
-
-- [快速开始](docs/getting-started.md)
-- [架构说明](docs/architecture.md)
-- [同步协议](docs/sync-protocol.md)
-- [API 摘要](docs/API.md)
-- [Windows 部署](docs/windows-deployment.md)
-- [故障排查](docs/troubleshooting.md)
-- [连通性验证](docs/network-validation.md)
-- [通用演示（占位符）](docs/demo.md)
-- [变更记录](CHANGELOG.md)
-
-## 已知限制
-
-- 校园网/企业网常屏蔽 UDP 广播，自动发现可能失败，需 HTTP 扫描或手动添加。
-- 删除是永久的，没有回收站。
-- 两端同时"一端删、一端写"可能出现短暂的文件忽隐忽现（墓碑竞争）。
-- 未签名构建：macOS Gatekeeper、Windows SmartScreen 会提示。
-- 免费 Cloudflare Tunnel 速度受线路影响，不适合大文件高速同步。
-- 分享链接可能选中虚拟网卡地址（如 VirtualBox Host-Only），手机访问请选 Wi-Fi 地址。
-
-## 安全
-
-- 默认只建议在可信局域网使用；公网暴露必须设置访问口令，并建议叠加 Cloudflare Access。
-- 访问口令、Tunnel token 不写入日志、不通过 API 回传。
-- 发现、同步、上传均为明文 HTTP（局域网/Tailscale 内），公网请走 HTTPS Tunnel。
-
-## License
-
-[MIT](LICENSE)
+[MIT License](LICENSE)。
