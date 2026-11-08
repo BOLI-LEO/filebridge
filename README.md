@@ -71,15 +71,27 @@ npm run server
 
 ## 校园网实测 · 五张网络系列图
 
-本项目通过自有及获授权的设备测试了学生网内部的跨 AP、跨楼栋、跨不同合法账号互访，以及学生网络和教学设备网络间指定端口的连接表现。下面是**根据实验重新绘制的 SVG 网络图解**；并非学校官方拓扑，也不是原始 PNG 图的逐像素复制。
+本项目通过自有及获授权的设备验证了学生网跨 AP、跨楼栋及跨不同合法账号的互访，以及学生网与教学设备网之间指定端口的连接情况。**以下为网络设备与通信路径示意：真实测量与未确认的设备结构分别标注，图中不代表学校的真实物理布线。**
 
-[![校园网总体逻辑拓扑](docs/campus-network/assets/01-campus-overview.svg)](docs/campus-network/README.md)
+### ① 校园网总体设备拓扑
 
-| 学生网互通 | 教学网跨区边界 |
-|:---:|:---:|
-| [![学生网接入与验证](docs/campus-network/assets/02-student-network.svg)](docs/campus-network/README.md#02--学生网接入与-filebridge-互通) | [![教学设备网络边界](docs/campus-network/assets/03-teaching-boundary.svg)](docs/campus-network/README.md#03--教学设备网与跨区边界) |
-| 仿真协议架构 | 测试结论 |
-| [![仿真协议架构](docs/campus-network/assets/04-simulation-architecture.svg)](docs/campus-network/README.md#04--网络工程仿真与协议分层) | [![测试结论与使用建议](docs/campus-network/assets/05-findings-and-guidance.svg)](docs/campus-network/README.md#05--实测结论与使用建议) |
+![校园网总体设备拓扑](docs/campus-network/assets/01-campus-overview.svg)
+
+### ② 学生网无线接入与跨账号互通
+
+![学生网设备拓扑与连接验证](docs/campus-network/assets/02-student-network.svg)
+
+### ③ 教学设备网与跨区通信边界
+
+![教学网设备与路由跳点](docs/campus-network/assets/03-teaching-boundary.svg)
+
+### ④ 分层网络工程仿真拓扑
+
+![双核心、汇聚、接入与无线网络仿真](docs/campus-network/assets/04-simulation-architecture.svg)
+
+### ⑤ FileBridge 实测结果与网络边界
+
+![实测网络连通性总结](docs/campus-network/assets/05-findings-and-guidance.svg)
 
 **实验中可确认的情况：** 学生网内多地点、不同账号的测试终端可以通过 TCP/HTTP 互访并完成 FileBridge 双向同步；学生网与教学设备网之间的已测 TCP 50000 双向连接失败。核心/汇聚的实际设备、ACL 部署位置、VLAN 编号和跨区 UDP 策略**均未证实**。
 
