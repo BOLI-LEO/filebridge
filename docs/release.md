@@ -6,6 +6,11 @@
 - Windows 安装器名：`FileBridge-Setup-<version>.exe`
 - macOS：`FileBridge-<version>.pkg`、`FileBridge-mac-arm64.dmg`
 
+## 构建环境
+
+- Node.js 22.12.0 或更高版本（建议 Node.js 22 LTS）与 npm；构建前使用 `node -v`、`npm -v` 检查版本。
+- Windows 安装器构建还需匹配仓库规定的 NSIS 3.04 工具链。
+
 ## 构建 macOS
 
 ```bash
