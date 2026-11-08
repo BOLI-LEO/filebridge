@@ -123,6 +123,7 @@ Windows 安装器跨平台构建依赖：
 - [API 摘要](docs/API.md)
 - [Windows 部署](docs/windows-deployment.md)
 - [故障排查](docs/troubleshooting.md)
+- [连通性验证](docs/network-validation.md)
 - [通用演示（占位符）](docs/demo.md)
 - [变更记录](CHANGELOG.md)
 
