@@ -111,8 +111,8 @@ function showLogin(message = '') {
     <form method="dialog" class="dialog-body login-body">
       <div class="login-icon">${icon('bridge', 'icon lg')}</div>
       <h2>输入访问口令</h2>
-      <p class="muted small">这台设备开启了访问口令，输入 6 位码后继续。</p>
-      <input class="field" id="login-code" inputmode="numeric" maxlength="32" autocomplete="off" placeholder="访问口令" aria-label="访问口令">
+      <p class="muted small">这台设备已启用访问口令，请输入正确口令后继续。</p>
+      <input class="field" id="login-code" type="password" maxlength="32" autocomplete="off" placeholder="访问口令" aria-label="访问口令">
       <p class="login-error small" id="login-error">${message}</p>
       <button class="btn primary" id="login-submit" type="submit">连接</button>
     </form>`;
@@ -1150,7 +1150,7 @@ async function openSettings() {
       </section>
       <section>
         <h3>访问</h3>
-        <label class="label">访问口令<input class="field" id="set-code" placeholder="留空关闭" inputmode="numeric"></label>
+        <label class="label">访问口令（留空不修改）<input class="field" id="set-code" type="password" placeholder="留空不修改"></label>
         <label class="check"><input type="checkbox" id="set-sync"> 自动同步共享目录</label>
       </section>
       <section>
@@ -1166,7 +1166,7 @@ async function openSettings() {
       </section>
       <section>
         <h3>远程访问（Cloudflare Tunnel）</h3>
-        <p class="muted small">域名：40502024.xyz。在 Cloudflare Zero Trust 建 tunnel 并添加 CNAME，然后把 token 填这里。</p>
+        <p class="muted small">如需使用自定义域名，请先在 Cloudflare Zero Trust 配置隧道和域名解析，再填写隧道令牌及域名。</p>
         <label class="label">Tunnel token<input class="field" id="set-token" placeholder="eyJhIjoi..." autocomplete="off"></label>
         <label class="label">公网域名<input class="field" id="set-hostname" placeholder="files.example.com"></label>
         <label class="check"><input type="checkbox" id="set-autostart"> 启动应用时自动连接</label>
@@ -1184,7 +1184,7 @@ async function openSettings() {
   wrap.querySelector('#set-name').value = settings.deviceName || '';
   wrap.querySelector('#set-root').value = settings.root || '';
   wrap.querySelector('#set-code').value = '';
-  wrap.querySelector('#set-code').placeholder = settings.accessCode ? '已设置（留空保留）' : '留空关闭';
+  wrap.querySelector('#set-code').placeholder = settings.accessCode ? '已设置（留空保持不变）' : '未设置（输入新口令）';
   wrap.querySelector('#set-sync').checked = Boolean(settings.autoSync);
   wrap.querySelector('#set-token').value = '';
   wrap.querySelector('#set-token').placeholder = tunnel.hasToken ? `已保存 ${tunnel.tokenMasked || ''}` : 'eyJhIjoi...';
