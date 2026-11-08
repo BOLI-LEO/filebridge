@@ -58,7 +58,7 @@ flowchart LR
 | Windows | NSIS `.exe` / 免安装压缩包 |
 | 手机 | 无独立 App；通过浏览器连接电脑 |
 
-源码运行需要 Node.js 20+：
+源码运行与构建需要 Node.js 22.12.0 或更高版本（建议 Node.js 22 LTS）：
 
 ```bash
 npm install
