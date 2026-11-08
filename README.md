@@ -75,23 +75,23 @@ npm run server
 
 ### ① 校园网总体设备拓扑
 
-![校园网总体设备拓扑](docs/campus-network/assets/01-campus-overview.svg)
+![校园网总体设备拓扑](docs/campus-network/assets/01-campus-overview.png)
 
 ### ② 学生网无线接入与跨账号互通
 
-![学生网设备拓扑与连接验证](docs/campus-network/assets/02-student-network.svg)
+![学生网设备拓扑与连接验证](docs/campus-network/assets/02-student-network.png)
 
 ### ③ 教学设备网与跨区通信边界
 
-![教学网设备与路由跳点](docs/campus-network/assets/03-teaching-boundary.svg)
+![教学网设备与路由跳点](docs/campus-network/assets/03-teaching-boundary.png)
 
 ### ④ 分层网络工程仿真拓扑
 
-![双核心、汇聚、接入与无线网络仿真](docs/campus-network/assets/04-simulation-architecture.svg)
+![双核心、汇聚、接入与无线网络仿真](docs/campus-network/assets/04-simulation-architecture.png)
 
 ### ⑤ FileBridge 实测结果与网络边界
 
-![实测网络连通性总结](docs/campus-network/assets/05-findings-and-guidance.svg)
+![实测网络连通性总结](docs/campus-network/assets/05-findings-and-guidance.png)
 
 **实验中可确认的情况：** 学生网内多地点、不同账号的测试终端可以通过 TCP/HTTP 互访并完成 FileBridge 双向同步；学生网与教学设备网之间的已测 TCP 50000 双向连接失败。核心/汇聚的实际设备、ACL 部署位置、VLAN 编号和跨区 UDP 策略**均未证实**。
 
@@ -123,7 +123,7 @@ flowchart TD
 | [HTTP API](docs/API.md) | 服务接口与身份认证 |
 | [Windows 部署](docs/windows-deployment.md) | 安装、权限和常见问题 |
 | [网络连通性诊断](docs/network-validation.md) | ICMP、TCP、HTTP 的排障方法 |
-| [校园网络实验图集](docs/campus-network/README.md) | 五张矢量拓扑图、测量事实与推断 |
+| [校园网络实验图集](docs/campus-network/README.md) | 五张 PNG 拓扑图、测量事实与推断 |
 | [故障排查](docs/troubleshooting.md) | 连接、安装、同步问题 |
 | [变更日志](CHANGELOG.md) | 版本记录 |
 

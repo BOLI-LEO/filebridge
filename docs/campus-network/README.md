@@ -8,31 +8,31 @@
 
 ### 01 · 校园网总体逻辑拓扑
 
-![校园网总体逻辑拓扑](assets/01-campus-overview.svg)
+![校园网总体逻辑拓扑](assets/01-campus-overview.png)
 
 该图汇总学生网与教学设备网的已知 IP 子网、网关、已观察三层跳点、已测通信结果，灰色虚线只表达推断或不完整观测。互联网出口与核心设备的实物连接方式未知。
 
 ### 02 · 学生网接入与 FileBridge 互通
 
-![学生网接入与互通验证](assets/02-student-network.svg)
+![学生网接入与互通验证](assets/02-student-network.png)
 
 实验期间，Windows A（`10.253.86.18`）和 Mac（`10.253.37.46`）位于学生网 `10.252.0.0/15`，跨 AP、跨区域可以完成 TCP 47890、HTTP `/api/health` 与文件同步；不同合法学生认证账号的互访对照也已完成。
 
 ### 03 · 教学设备网与跨区边界
 
-![教学设备网跨区边界](assets/03-teaching-boundary.svg)
+![教学设备网跨区边界](assets/03-teaching-boundary.png)
 
 学生终端 `10.253.86.18` 与教师机 `10.191.254.43` 的已测双向 TCP 50000 连接失败，ICMP Echo 未收到响应。教师机到学生网的 traceroute 曾观测到 `10.191.255.254`、`10.246.248.58`，随后探测超时。**超时不等于已经锁定 ACL 所在设备**。
 
 ### 04 · 网络工程仿真与协议分层
 
-![工程仿真协议架构](assets/04-simulation-architecture.svg)
+![工程仿真协议架构](assets/04-simulation-architecture.png)
 
 此页展示 eNSP 风格的**模拟方案**，包括双核心、汇聚、VLAN、MSTP、VRRP、OSPF、Eth-Trunk/LACP、NAT 等可选机制。这些不是学校真实配置的证据，也不意味着所有机制已经在真实校园网上测出。
 
 ### 05 · 实测结论与使用建议
 
-![网络实验结论](assets/05-findings-and-guidance.svg)
+![网络实验结论](assets/05-findings-and-guidance.png)
 
 通过同账号 / 不同账号的学生网测试、跨区域通信以及教学网双向连接测试，把可确认事实与可能的 ACL 等解释分开。
 
